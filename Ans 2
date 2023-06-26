@@ -1,0 +1,19 @@
+def firstUniqChar(s):
+    char_count = {}  # Dictionary to store character counts
+for char in s:
+        char_count[char] = char_count.get(char, 0) + 1
+
+    for i in range(len(s)):
+        if char_count[s[i]] == 1:
+            return i
+
+    return -1
+
+s1 = "leetcode"
+print(firstUniqChar(s1))  # Output: 0
+
+s2 = "loveleetcode"
+print(firstUniqChar(s2))  # Output: 2
+
+s3 = "aabb"
+print(firstUniqChar(s3))  # Output: -1
