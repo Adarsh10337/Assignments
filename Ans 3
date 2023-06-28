@@ -1,0 +1,143 @@
+1)  def threeSumClosest(nums, target):
+    nums.sort()
+    closestSum = float('inf')
+
+    for i in range(len(nums) - 2):
+        left = i + 1
+        right = len(nums) - 1
+
+        while left < right:
+            currentSum = nums[i] + nums[left] + nums[right]
+            if abs(currentSum - target) < abs(closestSum - target):
+                closestSum = currentSum
+
+            if currentSum < target:
+                left += 1
+            elif currentSum > target:
+                right -= 1
+            else:
+                return target
+
+    return closestSum
+
+2) def fourSum(nums, target):
+    nums.sort()
+    quadruplets = []
+
+    for i in range(len(nums) - 3):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+
+        for j in range(i + 1, len(nums) - 2):
+            if j > i + 1 and nums[j] == nums[j - 1]:
+                continue
+
+            left = j + 1
+            right = len(nums) - 1
+
+            while left < right:
+                currentSum = nums[i] + nums[j] + nums[left] + nums[right]
+                if currentSum == target:
+                    quadruplets.append([nums[i], nums[j], nums[left], nums[right]])
+
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right - 1]:
+                        right -= 1
+
+                    left += 1
+                    right -= 1
+                elif currentSum < target:
+                    left += 1
+                else:
+                    right -= 1
+
+    return quadruplets
+
+3) def nextPermutation(nums):
+    # Find the first pair from the right where nums[i] < nums[i+1]
+    i = len(nums) - 2
+    while i >= 0 and nums[i] >= nums[i + 1]:
+        i -= 1
+
+    if i >= 0:
+        # Find the smallest element in the suffix that is larger than nums[i]
+        j = len(nums) - 1
+        while nums[j] <= nums[i]:
+            j -= 1
+
+        # Swap nums[i] and nums[j]
+        nums[i], nums[j] = nums[j], nums[i]
+
+    # Reverse the suffix
+    left = i + 1
+    right = len(nums) - 1
+    while left < right:
+        nums[left], nums[right] = nums[right], nums[left]
+        left += 1
+        right -= 1
+
+    return nums
+
+4) def searchInsert(nums, target):
+    left = 0
+    right = len(nums) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return left
+
+5) def plusOne(digits):
+    carry = 1
+
+    for i in range(len(digits) - 1, -1, -1):
+        digit = digits[i] + carry
+        carry = digit // 10
+        digits[i] = digit % 10
+
+    if carry == 1:
+        digits.insert(0, 1)
+
+    return digits
+
+6) def singleNumber(nums):
+    result = 0
+    for num in nums:
+        result ^= num
+    return result
+
+7) def summaryRanges(nums):
+    ranges = []
+    start = end = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] == nums[i-1] + 1:
+            end = nums[i]
+        else:
+            ranges.append(getRange(start, end))
+            start = end = nums[i]
+
+    ranges.append(getRange(start, end))
+    return ranges
+
+def getRange(start, end):
+    if start == end:
+        return str(start)
+    else:
+        return str(start) + '->' + str(end)
+
+8) def canAttendMeetings(intervals):
+    intervals.sort(key=lambda x: x[0])  # Sort intervals based on start times
+
+    for i in range(1, len(intervals)):
+        if intervals[i][0] < intervals[i-1][1]:
+            return False
+
+    return True
