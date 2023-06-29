@@ -1,0 +1,132 @@
+1) def find_common_elements(arr1, arr2, arr3):
+    common_elements = []
+    i = j = k = 0
+
+    while i < len(arr1) and j < len(arr2) and k < len(arr3):
+        if arr1[i] == arr2[j] == arr3[k]:
+            common_elements.append(arr1[i])
+            i += 1
+            j += 1
+            k += 1
+        elif arr1[i] < arr2[j]:
+            i += 1
+        elif arr2[j] < arr3[k]:
+            j += 1
+        else:
+            k += 1
+
+    return common_elements
+
+# Example usage:
+arr1 = [1, 2, 3, 4, 5]
+arr2 = [1, 2, 5, 7, 9]
+arr3 = [1, 3, 4, 5, 8]
+
+result = find_common_elements(arr1, arr2, arr3)
+print(result)  # Output: [1, 5]
+
+2) def find_disjoint_elements(nums1, nums2):
+    set1 = set(nums1)
+    set2 = set(nums2)
+
+    distinct_nums1 = list(set1 - set2)
+    distinct_nums2 = list(set2 - set1)
+
+    return [distinct_nums1, distinct_nums2]
+
+# Example usage:
+nums1 = [1, 2, 3]
+nums2 = [2, 4, 6]
+
+result = find_disjoint_elements(nums1, nums2)
+print(result)  # Output: [[1, 3], [4, 6]]
+
+3) def transpose_matrix(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0])
+
+    transposed_matrix = [[0] * rows for _ in range(cols)]
+
+    for i in range(rows):
+        for j in range(cols):
+            transposed_matrix[j][i] = matrix[i][j]
+
+    return transposed_matrix
+
+# Example usage:
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+result = transpose_matrix(matrix)
+print(result)  # Output: [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+
+4) def array_pair_sum(nums):
+    nums.sort()
+    total_sum = 0
+
+    for i in range(0, len(nums), 2):
+        total_sum += nums[i]
+
+    return total_sum
+
+# Example usage:
+nums = [1, 4, 3, 2]
+
+result = array_pair_sum(nums)
+print(result)  # Output: 4
+
+5) import math
+
+def count_complete_rows(n):
+    return int(math.sqrt(2 * n + 0.25) - 0.5)
+
+# Example usage:
+n = 5
+
+result = count_complete_rows(n)
+print(result)  # Output: 2
+
+6) def sorted_squares(nums):
+    squared_nums = [num ** 2 for num in nums]
+    squared_nums.sort()
+
+    return squared_nums
+
+# Example usage:
+nums = [-4, -1, 0, 3, 10]
+
+result = sorted_squares(nums)
+print(result)  # Output: [0, 1, 9, 16, 100]
+
+7) def max_count(m, n, ops):
+    min_row = m
+    min_col = n
+
+    for op in ops:
+        min_row = min(min_row, op[0])
+        min_col = min(min_col, op[1])
+
+    return min_row * min_col
+
+# Example usage:
+m = 3
+n = 3
+ops = [[2, 2], [3, 3]]
+
+result = max_count(m, n, ops)
+print(result)  # Output: 4
+
+8) def rearrange_array(nums, n):
+    result = []
+
+    for i in range(n):
+        result.append(nums[i])
+        result.append(nums[i + n])
+
+    return result
+
+# Example usage:
+nums = [2, 5, 1, 3, 4, 7]
+n = 3
+
+result = rearrange_array(nums, n)
+print(result)  # Output: [2, 3, 5, 4, 1, 7]
