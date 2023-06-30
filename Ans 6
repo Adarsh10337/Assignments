@@ -1,0 +1,183 @@
+1) def reconstructPermutation(s):
+    n = len(s) + 1
+    result = [0] * n
+    small, large = 0, n
+
+    for i in range(n - 1, -1, -1):
+        if i == 0 or s[i - 1] == 'I':
+            result[i] = small
+            small += 1
+        else:
+            result[i] = large
+            large -= 1
+
+    return result
+
+# Example usage
+s = "IDID"
+output = reconstructPermutation(s)
+print(output)
+
+
+2) def searchMatrix(matrix, target):
+    if not matrix or not matrix[0]:
+        return False
+
+    rows, cols = len(matrix), len(matrix[0])
+    left, right = 0, rows * cols - 1
+
+    while left <= right:
+        mid = left + (right - left) // 2
+        num = matrix[mid // cols][mid % cols]
+        if num == target:
+            return True
+        elif num < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return False
+
+# Example usage
+matrix = [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]]
+target = 3
+output = searchMatrix(matrix, target)
+print(output)
+
+3) def validMountainArray(arr):
+    n = len(arr)
+    if n < 3:
+        return False
+
+    i = 0
+    while i + 1 < n and arr[i] < arr[i + 1]:
+        i += 1
+
+    if i == 0 or i == n - 1:
+        return False
+
+    while i + 1 < n and arr[i] > arr[i + 1]:
+        i += 1
+
+    return i == n - 1
+
+# Example usage
+arr = [2, 1]
+output = validMountainArray(arr)
+print(output)
+
+4) def findMaxLength(nums):
+    count = {0: -1}
+    max_length = 0
+    curr_sum = 0
+
+    for i, num in enumerate(nums):
+        if num == 0:
+            curr_sum -= 1
+        else:
+            curr_sum += 1
+
+        if curr_sum in count:
+            max_length = max(max_length, i - count[curr_sum])
+        else:
+            count[curr_sum] = i
+
+    return max_length
+
+# Example usage
+nums = [0, 1]
+output = findMaxLength(nums)
+print(output)
+
+5) def minProductSum(nums1, nums2):
+    nums1.sort()
+    nums2.sort(reverse=True)
+
+    return sum(nums1[i] * nums2[i] for i in range(len(nums1)))
+
+# Example usage
+nums1 = [5, 3, 4, 2]
+nums2 = [4, 2, 2, 5]
+output = minProductSum(nums1, nums2)
+print(output)
+
+6) def originalFromChanged(changed):
+    count = [0] * 10
+    for num in changed:
+        count[num] += 1
+
+    original = []
+    original.append(count[0] - count[1] - count[0])  # Number of 0s
+    original.append(count[1])  # Number of 1s
+    original.append(count[2] - count[1])  # Number of 2s
+    original.append(count[3] - count[4])  # Number of 3s
+    original.append(count[4])  # Number of 4s
+    original.append(count[5] - count[4] - count[6])  # Number of 5s
+    original.append(count[6])  # Number of 6s
+    original.append(count[7] - count[6] - count[8])  # Number of 7s
+    original.append(count[8])  # Number of 8s
+    original.append(count[9] - count[8] - count[5] - count[6])  # Number of 9s
+
+    result = []
+    for i in range(10):
+        result.extend([i] * original[i])
+
+    return result
+
+# Example usage
+changed = [1, 3, 4, 2, 6, 8]
+output = originalFromChanged(changed)
+print(output)
+
+7) def generateMatrix(n):
+    matrix = [[0] * n for _ in range(n)]
+    top, bottom, left, right = 0, n - 1, 0, n - 1
+    num = 1
+
+    while top <= bottom and left <= right:
+        for i in range(left, right + 1):
+            matrix[top][i] = num
+            num += 1
+        top += 1
+
+        for i in range(top, bottom + 1):
+            matrix[i][right] = num
+            num += 1
+        right -= 1
+
+        if top <= bottom:
+            for i in range(right, left - 1, -1):
+                matrix[bottom][i] = num
+                num += 1
+            bottom -= 1
+
+        if left <= right:
+            for i in range(bottom, top - 1, -1):
+                matrix[i][left] = num
+                num += 1
+            left += 1
+
+    return matrix
+
+# Example usage
+n = 3
+output = generateMatrix(n)
+print(output)
+
+8) def multiply(mat1, mat2):
+    m, k, n = len(mat1), len(mat1[0]), len(mat2[0])
+    result = [[0] * n for _ in range(m)]
+
+    for i in range(m):
+        for j in range(k):
+            if mat1[i][j] != 0:
+                for l in range(n):
+                    result[i][l] += mat1[i][j] * mat2[j][l]
+
+    return result
+
+# Example usage
+mat1 = [[1, 0, 0], [-1, 0, 3]]
+mat2 = [[7, 0, 0], [0, 0, 0], [0, 0, 1]]
+output = multiply(mat1, mat2)
+print(output)
