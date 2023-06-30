@@ -1,0 +1,127 @@
+1) def construct_2d_array(original, m, n):
+    if len(original) != m * n:
+        return []  # Return empty 2D array if it is impossible
+
+    result = []
+    for i in range(m):
+        row = original[i * n : (i + 1) * n]
+        result.append(row)
+
+    return result
+
+# Example usage
+original = [1, 2, 3, 4]
+m = 2
+n = 2
+
+output = construct_2d_array(original, m, n)
+print(output)
+
+2) import math
+
+def arrange_coins(n):
+    # Use quadratic formula to find the number of complete rows
+    rows = (-1 + math.sqrt(1 + 8 * n)) // 2
+    return int(rows)
+
+# Example usage
+n = 5
+output = arrange_coins(n)
+print(output)
+
+3) def sortedSquares(nums):
+    return sorted(num * num for num in nums)
+
+# Example usage
+nums = [-4, -1, 0, 3, 10]
+output = sortedSquares(nums)
+print(output)
+
+4) def arraysIntersection(nums1, nums2):
+    set1 = set(nums1)
+    set2 = set(nums2)
+    return [[x for x in nums1 if x not in set2], [x for x in nums2 if x not in set1]]
+
+# Example usage
+nums1 = [1, 2, 3]
+nums2 = [2, 4, 6]
+output = arraysIntersection(nums1, nums2)
+print(output)
+
+5) def findTheDistanceValue(arr1, arr2, d):
+    distance = 0
+    for num1 in arr1:
+        for num2 in arr2:
+            if abs(num1 - num2) <= d:
+                break
+        else:
+            distance += 1
+    return distance
+
+# Example usage
+arr1 = [4, 5, 8]
+arr2 = [10, 9, 1, 8]
+d = 2
+output = findTheDistanceValue(arr1, arr2, d)
+print(output)
+
+6) def findDuplicates(nums):
+    duplicates = []
+    for num in nums:
+        index = abs(num) - 1
+        if nums[index] < 0:
+            duplicates.append(abs(num))
+        else:
+            nums[index] = -nums[index]
+    return duplicates
+
+# Example usage
+nums = [4, 3, 2, 7, 8, 2, 3, 1]
+output = findDuplicates(nums)
+print(output)
+
+7) def findMin(nums):
+    left = 0
+    right = len(nums) - 1
+
+    while left < right:
+        mid = left + (right - left) // 2
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+
+    return nums[left]
+
+# Example usage
+nums = [3, 4, 5, 1, 2]
+output = findMin(nums)
+print(output)
+
+8) def originalDigits(changed):
+    count = [0] * 10
+    for num in changed:
+        count[num] += 1
+
+    original = []
+    original.append(count[0])  # Number of 0s
+    original.append(count[1] - count[0] - count[2] - count[4])  # Number of 1s
+    original.append(count[2])  # Number of 2s
+    original.append(count[3] - count[2] - count[8])  # Number of 3s
+    original.append(count[4])  # Number of 4s
+    original.append(count[5] - count[4] - count[6])  # Number of 5s
+    original.append(count[6])  # Number of 6s
+    original.append(count[7] - count[6] - count[8])  # Number of 7s
+    original.append(count[8])  # Number of 8s
+    original.append(count[9] - count[8] - count[5] - count[6])  # Number of 9s
+
+    result = []
+    for i in range(10):
+        result.extend([i] * original[i])
+
+    return result
+
+# Example usage
+changed = [1, 3, 4, 2, 6, 8]
+output = originalDigits(changed)
+print(output)
