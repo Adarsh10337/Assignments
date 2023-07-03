@@ -1,0 +1,196 @@
+Question 1: Determine if two strings are isomorphic
+
+
+
+def isomorphic_strings(s, t):
+    if len(s) != len(t):
+        return False
+    
+    mapping = {}
+    mapped_chars = set()
+    
+    for i in range(len(s)):
+        char_s = s[i]
+        char_t = t[i]
+        
+        if char_s in mapping:
+            if mapping[char_s] != char_t:
+                return False
+        else:
+            if char_t in mapped_chars:
+                return False
+            
+            mapping[char_s] = char_t
+            mapped_chars.add(char_t)
+    
+    return True
+
+# Example usage
+s = "egg"
+t = "add"
+print(isomorphic_strings(s, t))  # Output: True
+
+
+Question 2: Check if a string is a strobogrammatic number
+
+
+
+def is_strobogrammatic(num):
+    strobogrammatic_chars = {'0', '1', '8'}
+    rotated_chars = {'0': '0', '1': '1', '8': '8', '6': '9', '9': '6'}
+    
+    left, right = 0, len(num) - 1
+    
+    while left <= right:
+        if num[left] not in strobogrammatic_chars or num[right] not in strobogrammatic_chars:
+            return False
+        
+        if num[left] != rotated_chars[num[right]]:
+            return False
+        
+        left += 1
+        right -= 1
+    
+    return True
+
+# Example usage
+num = "69"
+print(is_strobogrammatic(num))  # Output: True
+
+
+Question 3: Add two strings representing non-negative integers
+
+
+
+def add_strings(num1, num2):
+    result = []
+    carry = 0
+    i = len(num1) - 1
+    j = len(num2) - 1
+    
+    while i >= 0 or j >= 0 or carry > 0:
+        digit_sum = carry
+        
+        if i >= 0:
+            digit_sum += int(num1[i])
+            i -= 1
+        
+        if j >= 0:
+            digit_sum += int(num2[j])
+            j -= 1
+        
+        result.append(str(digit_sum % 10))
+        carry = digit_sum // 10
+    
+    return ''.join(result[::-1])
+
+# Example usage
+num1 = "11"
+num2 = "123"
+print(add_strings(num1, num2))  # Output: "134"
+
+
+Question 4: Reverse words in a sentence
+
+
+
+def reverse_words(s):
+    words = s.split()
+    
+    for i in range(len(words)):
+        words[i] = words[i][::-1]
+    
+    return ' '.join(words)
+
+# Example usage
+s = "Let's take LeetCode contest"
+print(reverse_words(s))  # Output: "s'teL ekat edoCteeL tsetnoc"
+
+
+Question 5: Reverse k characters in a string
+
+
+
+def reverse_k_chars(s, k):
+    result = list(s)
+    i = 0
+    
+    while i < len(s):
+        start = i
+        end = min(i + k - 1, len(s) - 1)
+        
+        while start < end:
+            result[start], result[end] = result[end], result[start]
+            start += 1
+            end -= 1
+        
+        i += 2 * k
+    
+    return ''.join(result)
+
+# Example usage
+s = "abcdefg"
+k = 2
+print(reverse_k_chars(s, k))  # Output: "bacdfeg"
+
+
+Question 6: Check if a string can become another string after shifting
+
+def can_shift_string(s, goal):
+    if len(s) != len(goal):
+        return False
+    
+    return goal in s + s
+
+# Example usage
+s = "abcde"
+goal = "cdeab"
+print(can_shift_string(s, goal))  # Output: True
+
+
+Question 7: Check if two strings are equal after backspacing
+
+
+
+def backspace_compare(s, t):
+    def process_string(string):
+        stack = []
+        
+        for char in string:
+            if char != '#':
+                stack.append(char)
+            elif stack:
+                stack.pop()
+        
+        return ''.join(stack)
+    
+    return process_string(s) == process_string(t)
+
+# Example usage
+s = "ab#c"
+t = "ad#c"
+print(backspace_compare(s, t))  # Output: True
+
+
+Question 8: You are given an array coordinates, coordinates[i] = [x, y], where [x, y] represents the coordinate of a point. Check if these points make a straight line in the XY plane.
+
+def checkStraightLine(coordinates):
+    if len(coordinates) <= 2:
+        return True
+    
+    x0, y0 = coordinates[0]
+    x1, y1 = coordinates[1]
+    
+    for i in range(2, len(coordinates)):
+        x, y = coordinates[i]
+        
+        # Check if the points are not on the same line
+        if (y1 - y0) * (x - x0) != (y - y0) * (x1 - x0):
+            return False
+    
+    return True
+
+# Example usage
+coordinates = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]]
+print(checkStraightLine(coordinates))  # Output: True
+
