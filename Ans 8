@@ -1,0 +1,174 @@
+1) def minimumDeleteSum(s1, s2):
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(m - 1, -1, -1):
+        dp[i][n] = dp[i + 1][n] + ord(s1[i])
+
+    for j in range(n - 1, -1, -1):
+        dp[m][j] = dp[m][j + 1] + ord(s2[j])
+
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            if s1[i] == s2[j]:
+                dp[i][j] = dp[i + 1][j + 1]
+            else:
+                dp[i][j] = min(ord(s1[i]) + dp[i + 1][j], ord(s2[j]) + dp[i][j + 1])
+
+    return dp[0][0]
+
+
+2) def checkValidString(s):
+    min_open = 0
+    max_open = 0
+
+    for char in s:
+        if char == '(':
+            min_open += 1
+            max_open += 1
+        elif char == ')':
+            min_open = max(min_open - 1, 0)
+            max_open -= 1
+            if max_open < 0:
+                return False
+        elif char == '*':
+            min_open = max(min_open - 1, 0)
+            max_open += 1
+
+    return min_open == 0
+
+
+3) def minDistance(word1, word2):
+    m, n = len(word1), len(word2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(1, m + 1):
+        dp[i][0] = dp[i - 1][0] + 1
+
+    for j in range(1, n + 1):
+        dp[0][j] = dp[0][j - 1] + 1
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if word1[i - 1] == word2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1)
+
+    return dp[m][n]
+
+
+4) class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def str2tree(s):
+    stack = []
+    i = 0
+
+    while i < len(s):
+        if s[i] == '(':
+            i += 1
+        elif s[i] == ')':
+            stack.pop()
+            i += 1
+        else:
+            j = i
+            while j < len(s) and (s[j].isdigit() or s[j] == '-'):
+                j += 1
+
+            val = int(s[i:j])
+            node = TreeNode(val)
+            if stack:
+                parent = stack[-1]
+                if not parent.left:
+                    parent.left = node
+                else:
+                    parent.right = node
+
+            stack.append(node)
+            i = j
+
+    return stack[0] if stack else None
+
+
+5) def compress(chars):
+    current_char = chars[0]
+    count = 1
+    index = 0
+    
+    for i in range(1, len(chars)):
+        if chars[i] == current_char:
+            count += 1
+        else:
+            chars[index] = current_char
+            index += 1
+            
+            if count > 1:
+                count_str = str(count)
+                for j in range(len(count_str)):
+                    chars[index] = count_str[j]
+                    index += 1
+            
+            current_char = chars[i]
+            count = 1
+    
+    chars[index] = current_char
+    index += 1
+    
+    if count > 1:
+        count_str = str(count)
+        for j in range(len(count_str)):
+            chars[index] = count_str[j]
+            index += 1
+    
+    return index
+
+
+6) from collections import Counter
+
+def findAnagrams(s, p):
+    result = []
+    p_count = Counter(p)
+    window = Counter(s[:len(p)])
+
+    if window == p_count:
+        result.append(0)
+
+    for i in range(len(p), len(s)):
+        window[s[i]] += 1
+        window[s[i - len(p)]] -= 1
+        if window[s[i - len(p)]] == 0:
+            del window[s[i - len(p)]]
+        
+        if window == p_count:
+            result.append(i - len(p) + 1)
+
+    return result
+
+
+7) def decodeString(s):
+    stack = []
+    current_string = ''
+    current_number = 0
+    
+    for char in s:
+        if char.isdigit():
+            current_number = current_number * 10 + int(char)
+        elif char == '[':
+            stack.append((current_string, current_number))
+            current_string = ''
+            current_number = 0
+        elif char == ']':
+            prev_string, prev_number = stack.pop()
+            current_string = prev_string + prev_number * current_string
+        else:
+            current_string += char
+    
+    return current_string
+
+
+8) def canBeEqual(s, goal):
+    return sorted(s) == sorted(goal)
